@@ -1,19 +1,26 @@
 <template>
   <view v-if="isShow" class="lucky-box" :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }">
-    <canvas
-      id="lucky-wheel"
-      canvas-id="lucky-wheel"
-      :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }"
-    ></canvas>
-    <view class="lucky-wheel-btn" @click="toPlay" :style="{
-      width: btnWidth + 'px',
-      height: btnHeight + 'px',
-    }"></view>
+    <canvas id="lucky-wheel" canvas-id="lucky-wheel" :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }"></canvas>
+    <view class="lucky-wheel-btn" @click="toPlay" :style="{ width: btnWidth + 'px', height: btnHeight + 'px' }"></view>
+    <div class="lucky-imgs">
+      <div v-for="(prize, index) in prizes" :key="index">
+        <span v-if="prize.imgs">
+          <image v-for="(img, i) in prize.imgs" :key="i" :src="img.src" @load="e => imgBindload(e, 'prizes', index, i)"></image>
+        </span>
+      </div>
+    </div>
+    <div class="lucky-imgs">
+      <div v-for="(btn, index) in buttons" :key="index">
+        <span v-if="btn.imgs">
+          <image v-for="(img, i) in btn.imgs" :key="i" :src="img.src" @load="e => imgBindload(e, 'buttons', index, i)"></image>
+        </span>
+      </div>
+    </div>
   </view>
 </template>
 
 <script>
-  import { LuckyWheel } from 'lucky-canvas'
+  import { LuckyWheel } from '../lucky-canvas'
   export default {
     name: 'lucky-wheel',
     data () {
@@ -77,6 +84,13 @@
       }
     },
     methods: {
+      imgBindload (res, name, index, i) {
+        const img = this[name][index].imgs[i]
+        if (img && img.$resolve) img.$resolve({
+          ...res.detail,
+          path: img.src
+        })
+      },
       init () {
         this.boxWidth = this.changeUnits(this.width)
         this.boxHeight = this.changeUnits(this.height)
@@ -162,5 +176,10 @@
     transform: translate(-50%, -50%);
     background: rgba(0, 0, 0, 0);
     border-radius: 50%;
+  }
+  .lucky-imgs {
+    width: 0;
+    height: 0;
+    visibility: hidden;
   }
 </style>

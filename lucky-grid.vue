@@ -1,21 +1,24 @@
 <template>
-  <view v-if="isShow" class="lucky-box" :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }">
-    <canvas
-      id="lucky-grid"
-      canvas-id="lucky-grid"
-      :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }"
-    ></canvas>
-    <view class="lucky-grid-btn" @click="toPlay" :style="{
-      left: btnLeft + 'px',
-      top: btnTop + 'px',
-      width: btnWidth + 'px',
-      height: btnHeight + 'px',
-    }"></view>
-  </view>
+	<view v-if="isShow" class="lucky-box" :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }">
+    <canvas id="lucky-grid" canvas-id="lucky-grid" :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }"></canvas>
+    <view class="lucky-grid-btn" @click="toPlay" :style="{ left: btnLeft + 'px', top: btnTop + 'px', width: btnWidth + 'px', height: btnHeight + 'px' }"></view>
+    <div class="lucky-imgs">
+      <div v-for="(prize, index) in prizes" :key="index">
+        <span v-if="prize.imgs">
+          <image v-for="(img, i) in prize.imgs" :key="i" :src="img.src" @load="e => imgBindload(e, 'prizes', index, i)"></image>
+        </span>
+      </div>
+    </div>
+    <div class="lucky-imgs">
+      <span v-if="button && button.imgs">
+        <image v-for="(img, i) in button.imgs" :key="i" :src="img.src" @load="e => imgBindloadBtn(e, 'button', i)"></image>
+      </span>
+    </div>
+	</view>
 </template>
 
 <script>
-  import { LuckyGrid } from 'lucky-canvas'
+  import { LuckyGrid } from '../lucky-canvas'
   export default {
     name: 'lucky-grid',
     data () {
@@ -97,6 +100,20 @@
       }
     },
     methods: {
+      imgBindload (res, name, index, i) {
+        const img = this[name][index].imgs[i]
+        if (img && img.$resolve) img.$resolve({
+          ...res.detail,
+          path: img.src
+        })
+      },
+      imgBindloadBtn (res, name, i) {
+        const img = this[name].imgs[i]
+        if (img && img.$resolve) img.$resolve({
+          ...res.detail,
+          path: img.src
+        })
+      },
       init () {
         this.boxWidth = this.changeUnits(this.width)
         this.boxHeight = this.changeUnits(this.height)
@@ -108,7 +125,6 @@
       draw () {
         const ctx = this.ctx = uni.createCanvasContext('lucky-grid', this)
         const dpr = this.dpr = uni.getSystemInfoSync().pixelRatio
-        console.log(dpr)
         const $lucky = this.$lucky = new LuckyGrid({
           // #ifdef H5
           flag: 'UNI-H5',
@@ -141,7 +157,6 @@
             button.col || 1,
             button.row || 1
           ])
-          console.log([x, y, width, height])
           this.btnLeft = x
           this.btnTop = y
           this.btnWidth = width
@@ -193,5 +208,10 @@
     position: absolute;
     background: rgba(0, 0, 0, 0);
     border-radius: 0;
+  }
+  .lucky-imgs {
+    width: 0;
+    height: 0;
+    visibility: hidden;
   }
 </style>

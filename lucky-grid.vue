@@ -14,10 +14,11 @@
         <image v-for="(img, i) in button.imgs" :key="i" :src="img.src" @load="e => imgBindloadBtn(e, 'button', i)"></image>
       </span>
     </div>
-	</view>
+  </view>
 </template>
 
 <script>
+  import { changeUnits, base64src } from './utils.js'
   import { LuckyGrid } from '../lucky-canvas'
   export default {
     name: 'lucky-grid',
@@ -88,43 +89,43 @@
     watch: {
       prizes: {
         handler (newData, oldData) {
-          this.$lucky.prizes = newData
+          this.$lucky && (this.$lucky.prizes = newData)
         },
         deep: true
       },
       button: {
         handler (newData, oldData) {
-          this.$lucky.button = newData
+          this.$lucky && (this.$lucky.button = newData)
         },
         deep: true
       }
     },
     methods: {
-      imgBindload (res, name, index, i) {
+      async imgBindload (res, name, index, i) {
         const img = this[name][index].imgs[i]
         if (img && img.$resolve) img.$resolve({
           ...res.detail,
-          path: img.src
+          path: await base64src(img.src)
         })
       },
-      imgBindloadBtn (res, name, i) {
+      async imgBindloadBtn (res, name, i) {
         const img = this[name].imgs[i]
         if (img && img.$resolve) img.$resolve({
           ...res.detail,
-          path: img.src
+          path: await base64src(img.src)
         })
       },
       init () {
-        this.boxWidth = this.changeUnits(this.width)
-        this.boxHeight = this.changeUnits(this.height)
+        this.boxWidth = changeUnits(this.width)
+        this.boxHeight = changeUnits(this.height)
         this.isShow = true
         this.$nextTick(() => {
           this.draw()
         })
       },
       draw () {
-        const ctx = this.ctx = uni.createCanvasContext('lucky-grid', this)
-        const dpr = this.dpr = uni.getSystemInfoSync().pixelRatio
+        this.ctx = uni.createCanvasContext('lucky-grid', this)
+        this.dpr = uni.getSystemInfoSync().pixelRatio
         const $lucky = this.$lucky = new LuckyGrid({
           // #ifdef H5
           flag: 'UNI-H5',
@@ -132,7 +133,7 @@
           // #ifdef MP
           flag: 'UNI-MINI-WX',
           // #endif
-          ctx: ctx,
+          ctx: this.ctx,
           width: this.width,
           height: this.height,
           setTimeout: setTimeout,
@@ -147,21 +148,20 @@
           end: (...rest) => {
             this.$emit('end', ...rest)
           },
-        })
+        }) 
         // 动态设置按钮大小
         const button = this.$props.button
-        if (button) {
-          const [x, y, width, height] = $lucky.getGeometricProperty([
-            button.x,
-            button.y,
-            button.col || 1,
-            button.row || 1
-          ])
-          this.btnLeft = x
-          this.btnTop = y
-          this.btnWidth = width
-          this.btnHeight = height
-        }
+        if (button) [
+          this.btnLeft,
+          this.btnTop,
+          this.btnWidth,
+          this.btnHeight
+        ] = $lucky.getGeometricProperty([
+          button.x,
+          button.y,
+          button.col || 1,
+          button.row || 1
+        ])
       },
       toPlay (e) {
         this.$lucky.startCallback()
@@ -172,26 +172,6 @@
       stop (...rest) {
         this.$lucky.stop(...rest)
       },
-      rpx2px (value) {
-        if (typeof value === 'string') value = Number(value.replace(/[a-z]*/g, ''))
-        return uni.getSystemInfoSync().windowWidth / 750 * value
-      },
-      changeUnits (value) {
-        return Number(value.replace(/^(\-*[0-9.]*)([a-z%]*)$/, (value, num, unit) => {
-          switch (unit) {
-            case 'px':
-              num *= 1
-              break
-            case 'rpx':
-              num = this.rpx2px(num)
-              break
-            default:
-              num *= 1
-              break
-          }
-          return num
-        }))
-      }
     },
   }
 </script>
@@ -200,6 +180,7 @@
   .lucky-box {
     position: relative;
     overflow: hidden;
+    margin: 0 auto;
   }
   .lucky-box canvas {
     position: absolute;

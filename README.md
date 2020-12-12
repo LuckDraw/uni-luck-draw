@@ -94,10 +94,12 @@ yarn add uni-luck-draw
 
 ```js
 // npm 下载会默认到 node_modules 里面，直接引入包名即可
-import { LuckyWheel, LuckyGrid } from 'uni-luck-draw'
+import LuckyWheel from 'uni-luck-draw/lucky-wheel' // 大转盘
+import LuckyGrid from 'uni-luck-draw/lucky-grid' // 九宫格
 
 // 如果你是通过 HBuilderX 导入插件，那你需要指定一下路径
-// import { LuckyWheel, LuckyGrid } from './components/uni-luck-draw'
+// import LuckyWheel from '@/components/uni-luck-draw/lucky-wheel' // 大转盘
+// import LuckyGrid from '@/components/uni-luck-draw/lucky-grid' // 九宫格
 
 export default {
   // 注册组件

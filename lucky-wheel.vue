@@ -20,6 +20,7 @@
 </template>
 
 <script>
+  import { changeUnits, base64src } from './utils.js'
   import { LuckyWheel } from '../lucky-canvas'
   export default {
     name: 'lucky-wheel',
@@ -72,28 +73,28 @@
     watch: {
       prizes: {
         handler (newData, oldData) {
-          this.$lucky.prizes = newData
+          this.$lucky && (this.$lucky.prizes = newData)
         },
         deep: true
       },
       buttons: {
         handler (newData, oldData) {
-          this.$lucky.buttons = newData
+          this.$lucky && (this.$lucky.buttons = newData)
         },
         deep: true
       }
     },
     methods: {
-      imgBindload (res, name, index, i) {
+      async imgBindload (res, name, index, i) {
         const img = this[name][index].imgs[i]
         if (img && img.$resolve) img.$resolve({
           ...res.detail,
-          path: img.src
+          path: await base64src(img.src)
         })
       },
       init () {
-        this.boxWidth = this.changeUnits(this.width)
-        this.boxHeight = this.changeUnits(this.height)
+        this.boxWidth = changeUnits(this.width)
+        this.boxHeight = changeUnits(this.height)
         this.isShow = true
         this.$nextTick(() => {
           this.draw()
@@ -138,26 +139,6 @@
       stop (...rest) {
         this.$lucky.stop(...rest)
       },
-      rpx2px (value) {
-        if (typeof value === 'string') value = Number(value.replace(/[a-z]*/g, ''))
-        return uni.getSystemInfoSync().windowWidth / 750 * value
-      },
-      changeUnits (value) {
-        return Number(value.replace(/^(\-*[0-9.]*)([a-z%]*)$/, (value, num, unit) => {
-          switch (unit) {
-            case 'px':
-              num *= 1
-              break
-            case 'rpx':
-              num = this.rpx2px(num)
-              break
-            default:
-              num *= 1
-              break
-          }
-          return num
-        }))
-      }
     },
   }
 </script>
@@ -165,6 +146,8 @@
 <style scoped>
   .lucky-box {
     position: relative;
+    overflow: hidden;
+    margin: 0 auto;
   }
   .lucky-box canvas {
     position: absolute;

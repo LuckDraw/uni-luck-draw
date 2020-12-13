@@ -103,17 +103,17 @@
     methods: {
       async imgBindload (res, name, index, i) {
         const img = this[name][index].imgs[i]
-        if (img && img.$resolve) img.$resolve({
-          ...res.detail,
-          path: await base64src(img.src)
-        })
+        if (img && img.$resolve) {
+          const path = await base64src(img.src)
+          img.$resolve({ ...res.detail, path })
+        }
       },
       async imgBindloadBtn (res, name, i) {
         const img = this[name].imgs[i]
-        if (img && img.$resolve) img.$resolve({
-          ...res.detail,
-          path: await base64src(img.src)
-        })
+        if (img && img.$resolve) {
+          const path = await base64src(img.src)
+          img.$resolve({ ...res.detail, path })
+        }
       },
       init () {
         this.boxWidth = changeUnits(this.width)

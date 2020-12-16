@@ -134,6 +134,7 @@
           flag: 'UNI-MINI-WX',
           // #endif
           ctx: this.ctx,
+          dpr: this.dpr,
           width: this.width,
           height: this.height,
           setTimeout: setTimeout,

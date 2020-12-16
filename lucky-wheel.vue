@@ -101,8 +101,8 @@
         })
       },
       draw () {
-        const ctx = this.ctx = uni.createCanvasContext('lucky-wheel', this)
-        const dpr = this.dpr = uni.getSystemInfoSync().pixelRatio
+        this.ctx = uni.createCanvasContext('lucky-wheel', this)
+        this.dpr = uni.getSystemInfoSync().pixelRatio
         const $lucky = this.$lucky = new LuckyWheel({
           // #ifdef H5
           flag: 'UNI-H5',
@@ -110,7 +110,8 @@
           // #ifdef MP
           flag: 'UNI-MINI-WX',
           // #endif
-          ctx: ctx,
+          ctx: this.ctx,
+          dpr: this.dpr,
           width: this.width,
           height: this.height,
           setTimeout: setTimeout,

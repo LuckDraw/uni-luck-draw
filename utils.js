@@ -20,7 +20,10 @@ export const changeUnits = (value) => {
   }))
 }
 
-const fsm = wx.getFileSystemManager()
+let fsm
+// #ifdef MP
+fsm = wx.getFileSystemManager()
+// #endif
 let tempImageFlag = 0
 export const base64src = function(base64data) {
   return new Promise((resolve, reject) => {

@@ -31,6 +31,8 @@
         boxHeight: 100,
         btnWidth: 0,
         btnHeight: 0,
+        dpr: 1,
+        transformStyle: '',
       }
     },
     props: {
@@ -93,16 +95,20 @@
         }
       },
       init () {
+        const dpr = this.dpr = uni.getSystemInfoSync().pixelRatio
         this.boxWidth = changeUnits(this.width)
         this.boxHeight = changeUnits(this.height)
+        const compute = (len) => (len * dpr - len) / (len * dpr) * (dpr / 2) * 100
+        this.transformStyle = `scale(${1 / dpr}) translate(
+          ${-compute(this.boxWidth * dpr)}%, ${-compute(this.boxHeight * dpr)}%
+        )`
         this.isShow = true
         this.$nextTick(() => {
           this.draw()
         })
       },
       draw () {
-        this.ctx = uni.createCanvasContext('lucky-wheel', this)
-        this.dpr = uni.getSystemInfoSync().pixelRatio
+        const ctx = this.ctx = uni.createCanvasContext('lucky-wheel', this)
         const $lucky = this.$lucky = new LuckyWheel({
           // #ifdef H5
           flag: 'UNI-H5',
@@ -110,14 +116,22 @@
           // #ifdef MP
           flag: 'UNI-MINI-WX',
           // #endif
+          dpr: 1,
           ctx: this.ctx,
-          dpr: this.dpr,
           width: this.width,
           height: this.height,
           setTimeout: setTimeout,
           clearTimeout: clearTimeout,
           setInterval: setInterval,
           clearInterval: clearInterval,
+          unitFunc: (num, unit) => changeUnits(num + unit),
+          beforeDraw: function () {
+            // const { config } = this
+            // ctx.scale(config.dpr, config.dpr)
+          },
+          afterDraw: function () {
+            ctx.draw()
+          },
         }, {
           ...this.$props,
           start: (...rest) => {
@@ -148,7 +162,6 @@
   .lucky-box {
     position: relative;
     overflow: hidden;
-    margin: 0 auto;
   }
   .lucky-box canvas {
     position: absolute;

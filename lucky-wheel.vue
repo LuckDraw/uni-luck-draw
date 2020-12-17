@@ -126,8 +126,7 @@
           clearInterval: clearInterval,
           unitFunc: (num, unit) => changeUnits(num + unit),
           beforeDraw: function () {
-            // const { config } = this
-            // ctx.scale(config.dpr, config.dpr)
+            ctx.translate(this.Radius, this.Radius)
           },
           afterDraw: function () {
             ctx.draw()

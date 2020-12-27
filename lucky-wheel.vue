@@ -20,7 +20,7 @@
 </template>
 
 <script>
-  import { changeUnits, base64src } from './utils.js'
+  import { changeUnits, resolveImage } from './utils.js'
   import { LuckyWheel } from '../lucky-canvas'
   export default {
     name: 'lucky-wheel',
@@ -89,10 +89,7 @@
     methods: {
       async imgBindload (res, name, index, i) {
         const img = this[name][index].imgs[i]
-        if (img && img.$resolve) {
-          const path = await base64src(img.src)
-          img.$resolve({ ...res.detail, path })
-        }
+        resolveImage(res, img)
       },
       init () {
         const dpr = this.dpr = uni.getSystemInfoSync().pixelRatio

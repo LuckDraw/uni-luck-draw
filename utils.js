@@ -38,22 +38,30 @@ export const base64src = function(base64data) {
       data: buffer,
       encoding: 'binary',
       success: () => resolve(filePath),
-      fail: () => reject(new Error('base64图片缓存失败'))
+      fail: (res) => {
+        console.error('API `fsm.writeFile` 进入失败回调', {
+          errMsg: res.errMsg,
+          ArrayBuffer: buffer
+        })
+        reject(new Error('base64图片缓存失败'))
+      }
     })
   })
 }
 
-export const cacheImage = (arr) => {
-  return new Promise((resolve, reject) => {
-    if (Object.prototype.toString.call(arr) !== '[object Array]') {
-      return reject('cacheImage => arr type error')
-    }
-    arr.forEach((item) => {
-      if (!item.imgs) return
-      item.imgs.forEach(async (img) => {
-        img.src = await base64src(img.src)
-      })
-    })
-    resolve(arr)
+export const resolveImage = async (res, { src, $resolve }) => {
+  // #ifdef MP
+  // 如果是base64就调用base64src()方法把图片写入本地, 然后渲染临时路径
+  if (/^data:image\/([a-z]+);base64,/.test(src)) {
+    const path = await base64src(src)
+    $resolve({ ...res.detail, path })
+    return
+  }
+  // #endif
+  // 如果是网络图片, 则通过getImageInfo()方法获取图片宽高
+  uni.getImageInfo({
+    src: src,
+    success: (imgObj) => $resolve(imgObj),
+    fail: () => console.error('API `uni.getImageInfo` 加载图片失败', src)
   })
 }

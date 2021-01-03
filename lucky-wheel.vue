@@ -75,13 +75,19 @@
     watch: {
       prizes: {
         handler (newData, oldData) {
-          this.$lucky && (this.$lucky.prizes = newData)
+          if (this.$lucky) {
+            this.$lucky.prizes = []
+            this.$lucky.prizes = newData
+          }
         },
         deep: true
       },
       buttons: {
         handler (newData, oldData) {
-          this.$lucky && (this.$lucky.buttons = newData)
+          if (this.$lucky) {
+            this.$lucky.buttons = []
+            this.$lucky.buttons = newData
+          }
         },
         deep: true
       }

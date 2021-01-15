@@ -89,24 +89,21 @@
       this.init()
     },
     watch: {
-      prizes: {
-        handler (newData, oldData) {
-          if (this.$lucky) {
-            this.$lucky.prizes = []
-            this.$lucky.prizes = newData
-          }
-        },
-        deep: true
+      cols (newData, oldData) {
+        this.$lucky && (this.$lucky.cols = newData)
       },
-      button: {
-        handler (newData, oldData) {
-          if (this.$lucky) {
-            this.$lucky.button = []
-            this.$lucky.button = newData
-          }
-        },
-        deep: true
-      }
+      rows (newData, oldData) {
+        this.$lucky && (this.$lucky.rows = newData)
+      },
+      blocks (newData, oldData) {
+        this.$lucky && (this.$lucky.blocks = newData)
+      },
+      prizes (newData, oldData) {
+        this.$lucky && (this.$lucky.prizes = newData)
+      },
+      button (newData, oldData) {
+        this.$lucky && (this.$lucky.button = newData)
+      },
     },
     methods: {
       async imgBindload (res, name, index, i) {

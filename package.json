@@ -1,6 +1,6 @@
 {
   "name": "uni-luck-draw",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -20,6 +20,6 @@
   "author": "ldq <ldq404@qq.com>",
   "license": "BSD-3-Clause",
   "dependencies": {
-    "lucky-canvas": "^1.2.8"
+    "lucky-canvas": "^1.2.9"
   }
 }

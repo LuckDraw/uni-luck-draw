@@ -3,16 +3,15 @@
     <canvas id="lucky-grid" canvas-id="lucky-grid" :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }"></canvas>
     <view class="lucky-grid-btn" @click="toPlay" :style="{ left: btnLeft + 'px', top: btnTop + 'px', width: btnWidth + 'px', height: btnHeight + 'px' }"></view>
     <div class="lucky-imgs">
-      <div v-for="(prize, index) in prizes" :key="index">
-        <span v-if="prize.imgs">
-          <image v-for="(img, i) in prize.imgs" :key="i" :src="img.src" @load="e => imgBindload(e, 'prizes', index, i)"></image>
-        </span>
+      <div v-for="(prize, index) in prizes" :key="index" v-if="prize.imgs">
+        <div v-for="(img, i) in prize.imgs" :key="i">
+          <image :src="img.src" @load="e => imgBindload(e, 'prizes', index, i)"></image>
+          <image :src="img.activeSrc" @load="e => imgBindloadActive(e, 'prizes', index, i)"></image>
+        </div>
       </div>
     </div>
-    <div class="lucky-imgs">
-      <span v-if="button && button.imgs">
-        <image v-for="(img, i) in button.imgs" :key="i" :src="img.src" @load="e => imgBindloadBtn(e, 'button', i)"></image>
-      </span>
+    <div class="lucky-imgs" v-if="button && button.imgs">
+      <image v-for="(img, i) in button.imgs" :key="i" :src="img.src" @load="e => imgBindloadBtn(e, 'button', i)"></image>
     </div>
   </view>
 </template>
@@ -109,6 +108,10 @@
       async imgBindload (res, name, index, i) {
         const img = this[name][index].imgs[i]
         resolveImage(res, img)
+      },
+      async imgBindloadActive (res, name, index, i) {
+        const img = this[name][index].imgs[i]
+        resolveImage(res, img, 'activeSrc', '$activeResolve')
       },
       async imgBindloadBtn (res, name, i) {
         const img = this[name].imgs[i]

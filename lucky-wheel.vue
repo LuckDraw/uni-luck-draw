@@ -3,17 +3,18 @@
     <canvas id="lucky-wheel" canvas-id="lucky-wheel" :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }"></canvas>
     <view class="lucky-wheel-btn" @click="toPlay" :style="{ width: btnWidth + 'px', height: btnHeight + 'px' }"></view>
     <div class="lucky-imgs">
-      <div v-for="(prize, index) in prizes" :key="index">
-        <span v-if="prize.imgs">
-          <image v-for="(img, i) in prize.imgs" :key="i" :src="img.src" @load="e => imgBindload(e, 'prizes', index, i)"></image>
-        </span>
+      <div v-for="(block, index) in blocks" :key="index" v-if="block.imgs">
+        <image v-for="(img, i) in block.imgs" :key="i" :src="img.src" @load="e => imgBindload(e, 'blocks', index, i)"></image>
       </div>
     </div>
     <div class="lucky-imgs">
-      <div v-for="(btn, index) in buttons" :key="index">
-        <span v-if="btn.imgs">
-          <image v-for="(img, i) in btn.imgs" :key="i" :src="img.src" @load="e => imgBindload(e, 'buttons', index, i)"></image>
-        </span>
+      <div v-for="(prize, index) in prizes" :key="index" v-if="prize.imgs">
+        <image v-for="(img, i) in prize.imgs" :key="i" :src="img.src" @load="e => imgBindload(e, 'prizes', index, i)"></image>
+      </div>
+    </div>
+    <div class="lucky-imgs">
+      <div v-for="(btn, index) in buttons" :key="index" v-if="btn.imgs">
+        <image v-for="(img, i) in btn.imgs" :key="i" :src="img.src" @load="e => imgBindload(e, 'buttons', index, i)"></image>
       </div>
     </div>
   </view>

@@ -1,17 +1,27 @@
 <template>
 	<view v-if="isShow" class="lucky-box" :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }">
-    <canvas id="lucky-grid" canvas-id="lucky-grid" :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }"></canvas>
-    <view class="lucky-grid-btn" @click="toPlay" :style="{ left: btnLeft + 'px', top: btnTop + 'px', width: btnWidth + 'px', height: btnHeight + 'px' }"></view>
+    <canvas id="lucky-grid" canvas-id="lucky-grid" :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }" @touchend="toPlay"></canvas>
     <div class="lucky-imgs">
-      <div v-for="(prize, index) in prizes" :key="index" v-if="prize.imgs">
-        <div v-for="(img, i) in prize.imgs" :key="i">
-          <image :src="img.src" @load="e => imgBindload(e, 'prizes', index, i)"></image>
-          <image :src="img.activeSrc" @load="e => imgBindloadActive(e, 'prizes', index, i)"></image>
+      <div v-for="(prize, index) in prizes" :key="index">
+        <div v-if="prize.imgs">
+          <div v-for="(img, i) in prize.imgs" :key="i">
+            <image :src="img.src" @load="e => imgBindload(e, 'prizes', index, i)"></image>
+            <image :src="img.activeSrc" @load="e => imgBindloadActive(e, 'prizes', index, i)"></image>
+          </div>
         </div>
       </div>
     </div>
-    <div class="lucky-imgs" v-if="button && button.imgs">
-      <image v-for="(img, i) in button.imgs" :key="i" :src="img.src" @load="e => imgBindloadBtn(e, 'button', i)"></image>
+    <div class="lucky-imgs">
+      <div v-for="(btn, index) in buttons" :key="index">
+        <div v-if="btn.imgs">
+          <image v-for="(img, i) in btn.imgs" :key="i" :src="img.src" @load="e => imgBindload(e, 'buttons', index, i)"></image>
+        </div>
+      </div>
+    </div>
+    <div class="lucky-imgs">
+      <span v-if="button && button.imgs">
+        <image v-for="(img, i) in button.imgs" :key="i" :src="img.src" @load="e => imgBindloadBtn(e, 'button', i)"></image>
+      </span>
     </div>
   </view>
 </template>
@@ -59,11 +69,13 @@
         type: Array,
         default: () => []
       },
+      buttons: {
+        type: Array,
+        default: () => []
+      },
       button: {
         type: Object,
-        default: () => {
-          return {}
-        }
+        default: undefined
       },
       defaultConfig: {
         type: Object,
@@ -100,6 +112,9 @@
       prizes (newData, oldData) {
         this.$lucky && (this.$lucky.prizes = newData)
       },
+      buttons (newData, oldData) {
+        this.$lucky && (this.$lucky.buttons = newData)
+      },
       button (newData, oldData) {
         this.$lucky && (this.$lucky.button = newData)
       },
@@ -126,9 +141,7 @@
           ${-compute(this.boxWidth * dpr)}%, ${-compute(this.boxHeight * dpr)}%
         )`
         this.isShow = true
-        this.$nextTick(() => {
-          this.draw()
-        })
+        this.$nextTick(() => this.draw())
       },
       draw () {
         const ctx = this.ctx = uni.createCanvasContext('lucky-grid', this)
@@ -164,24 +177,24 @@
             this.$emit('end', ...rest)
           },
         })
-        // 动态设置按钮大小
-        const button = this.$props.button
-        if (button.hasOwnProperty('x') && button.hasOwnProperty('y')) {
-          [
-            this.btnLeft,
-            this.btnTop,
-            this.btnWidth,
-            this.btnHeight
-          ] = $lucky.getGeometricProperty([
-            button.x,
-            button.y,
-            button.col || 1,
-            button.row || 1
-          ])
-        }
       },
       toPlay (e) {
-        this.$lucky.startCallback()
+        const {x, y} = e.changedTouches[0]
+        ;[
+          ...this.$props.buttons,
+          this.$props.button
+        ].forEach(btn => {
+          if (!btn) return
+          const [xAxis, yAxis, w, h] = this.$lucky.getGeometricProperty([
+            btn.x,
+            btn.y,
+            btn.col || 1,
+            btn.row || 1
+          ])
+          if (x > xAxis && x < xAxis + w && y > yAxis && y < yAxis + h) {
+            this.$lucky.startCallback(btn)
+          }
+        })
       },
       play (...rest) {
         this.$lucky.play(...rest)

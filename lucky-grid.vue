@@ -146,7 +146,7 @@
       draw () {
         const ctx = this.ctx = uni.createCanvasContext('lucky-grid', this)
         const $lucky = this.$lucky = new LuckyGrid({
-          // #ifdef H5
+          // #ifdef H5 || APP-PLUS
           flag: 'UNI-H5',
           // #endif
           // #ifdef MP
@@ -156,6 +156,9 @@
           ctx: this.ctx,
           width: this.width,
           height: this.height,
+          // #ifdef H5
+          rAF: requestAnimationFrame,
+          // #endif
           setTimeout: setTimeout,
           clearTimeout: clearTimeout,
           setInterval: setInterval,

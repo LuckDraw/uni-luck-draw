@@ -3,6 +3,13 @@
     <canvas id="lucky-wheel" canvas-id="lucky-wheel" :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }"></canvas>
     <view class="lucky-wheel-btn" @click="toPlay" :style="{ width: btnWidth + 'px', height: btnHeight + 'px' }"></view>
     <div class="lucky-imgs">
+      <div v-for="(block, index) in blocks" :key="index">
+        <div v-if="block.imgs">
+          <image v-for="(img, i) in block.imgs" :key="i" :src="img.src" @load="e => imgBindload(e, 'blocks', index, i)"></image>
+        </div>
+      </div>
+    </div>
+    <div class="lucky-imgs">
       <div v-for="(prize, index) in prizes" :key="index">
         <div v-if="prize.imgs">
           <image v-for="(img, i) in prize.imgs" :key="i" :src="img.src" @load="e => imgBindload(e, 'prizes', index, i)"></image>
@@ -104,7 +111,7 @@
       draw () {
         const ctx = this.ctx = uni.createCanvasContext('lucky-wheel', this)
         const $lucky = this.$lucky = new LuckyWheel({
-          // #ifdef H5
+          // #ifdef H5 || APP-PLUS
           flag: 'UNI-H5',
           // #endif
           // #ifdef MP
@@ -114,6 +121,9 @@
           ctx: this.ctx,
           width: this.width,
           height: this.height,
+          // #ifdef H5
+          rAF: requestAnimationFrame,
+          // #endif
           setTimeout: setTimeout,
           clearTimeout: clearTimeout,
           setInterval: setInterval,

@@ -130,6 +130,7 @@
           clearInterval: clearInterval,
           unitFunc: (num, unit) => changeUnits(num + unit),
           beforeDraw: function () {
+            ctx.draw()
             ctx.translate(this.Radius, this.Radius)
           },
           afterDraw: function () {

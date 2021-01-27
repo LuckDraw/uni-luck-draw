@@ -1,53 +1,31 @@
-<!-- 
 
-## 其他框架适配情况
-
-<table>
-  <thead>
-    <tr style="background: #fafafb">
-      <td align="center">npm 包</td>
-      <td align="center">支持的框架</td>
-      <td align="center">最新版本</td>
-      <td align="center">下载量（月）</td>
-      <td align="center">Star</td>
-    </tr>
-  </thead>
-  <tbody>
-    <tr style="background: #ecf5ff">
-      <td align="center"><a href="https://github.com/LuckDraw/lucky-canvas" target="_black">lucky-canvas</a></td>
-      <td align="center">Js / JQuery</td>
-      <td align="center"><img src="https://img.shields.io/github/package-json/v/luckdraw/lucky-canvas?color=%23ffca28&logo=npm&style=flat-square" alt="version" /></td>
-      <td align="center"><img src="https://img.shields.io/npm/dm/lucky-canvas?color=%237289da&logo=npm&style=flat-square" alt="downloads" /></td>
-      <td align="center"><img src="https://img.shields.io/github/stars/luckdraw/lucky-canvas?color=%232DCE89&logo=github&style=flat-square" alt="stars" /></td>
-    </tr>
-    <tr style="background: #f0f9eb">
-      <td align="center"><a href="https://github.com/LuckDraw/vue-luck-draw" target="_black">vue-luck-draw</a></td>
-      <td align="center">Vue2.x / Vue3.x</td>
-      <td align="center"><img src="https://img.shields.io/github/package-json/v/luckdraw/vue-luck-draw?color=%23ffca28&logo=npm&style=flat-square" alt="version" /></td>
-      <td align="center"><img src="https://img.shields.io/npm/dm/vue-luck-draw?color=%237289da&logo=npm&style=flat-square" alt="downloads" /></td>
-      <td align="center"><img src="https://img.shields.io/github/stars/luckdraw/vue-luck-draw?color=%232DCE89&logo=github&style=flat-square" alt="stars" /></td>
-    </tr>
-    <tr style="background: #fef0f0">
-      <td align="center">react-luck-draw</td>
-      <td align="center">React</td>
-      <td align="center" colspan="3">开发中...</td>
-    </tr>
-    <tr style="background: #fdf6ec">
-      <td align="center"><a href="https://github.com/LuckDraw/mini-luck-draw" target="_black">mini-luck-draw</a></td>
-      <td align="center">原生微信小程序</td>
-      <td align="center" colspan="3">测试中...</td>
-    </tr>
-    <tr style="background: #fdf6ec">
-      <td align="center"><a href="https://github.com/LuckDraw/uni-luck-draw" target="_black">uni-luck-draw</a></td>
-      <td align="center">uni-app</td>
-      <td align="center"><img src="https://img.shields.io/github/package-json/v/luckdraw/uni-luck-draw?color=%23ffca28&logo=npm&style=flat-square" alt="version" /></td>
-      <td align="center"><img src="https://img.shields.io/npm/dm/uni-luck-draw?color=%237289da&logo=npm&style=flat-square" alt="downloads" /></td>
-      <td align="center"><img src="https://img.shields.io/github/stars/luckdraw/uni-luck-draw?color=%232DCE89&logo=github&style=flat-square" alt="stars" /></td>
-    </tr>
-  </tbody>
-</table>
-
- -->
+<div align="center">
+  <img src="https://raw.githubusercontent.com/LuckDraw/lucky-canvas/master/web.svg" width="200" alt="logo" />
+  <h1>uni-luck-draw 抽奖组件</h1>
+  <p>一个基于 uni-app 的 ( 大转盘 / 九宫格 ) 抽奖插件</p>
+  <p>
+    <a href="https://github.com/buuing/uni-luck-draw/stargazers" target="_black">
+      <img src="https://img.shields.io/github/stars/buuing/uni-luck-draw?color=%23ffca28&logo=github&style=flat-square" alt="stars" />
+    </a>
+    <a href="https://github.com/buuing/uni-luck-draw/network/members" target="_black">
+      <img src="https://img.shields.io/github/forks/buuing/uni-luck-draw?color=%23ffca28&logo=github&style=flat-square" alt="forks" />
+    </a>
+    <a href="https://www.npmjs.com/package/uni-luck-draw" target="_black">
+      <img src="https://img.shields.io/npm/v/uni-luck-draw?color=%23ffca28&logo=npm&style=flat-square" alt="version" />
+    </a>
+    <a href="https://www.npmjs.com/package/uni-luck-draw" target="_black">
+      <img src="https://img.shields.io/npm/dm/uni-luck-draw?color=%23ffca28&logo=npm&style=flat-square" alt="downloads" />
+    </a>
+  </p>
+  <p>
+    <a href="https://github.com/buuing" target="_black">
+      <img src="https://img.shields.io/badge/Author-%20buuing%20-7289da.svg?&logo=github&style=flat-square" alt="author" />
+    </a>
+    <a href="https://github.com/buuing/uni-luck-draw/blob/master/LICENSE" target="_black">
+      <img src="https://img.shields.io/github/license/buuing/uni-luck-draw?color=%232DCE89&logo=github&style=flat-square" alt="license" />
+    </a>
+  </p>
+</div>
 
 <br />
 

@@ -129,8 +129,11 @@
           setInterval: setInterval,
           clearInterval: clearInterval,
           unitFunc: (num, unit) => changeUnits(num + unit),
+          beforeInit: function () {
+            const Radius = Math.min(this.config.width, this.config.height) / 2
+            ctx.translate(-Radius, -Radius)
+          },
           beforeDraw: function () {
-            ctx.draw()
             ctx.translate(this.Radius, this.Radius)
           },
           afterDraw: function () {

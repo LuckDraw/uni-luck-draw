@@ -21,9 +21,6 @@ export const changeUnits = (value) => {
 }
 
 let fsm
-// #ifdef MP
-fsm = wx.getFileSystemManager()
-// #endif
 let tempImageFlag = 0
 export const base64src = function(base64data) {
   return new Promise((resolve, reject) => {
@@ -33,7 +30,7 @@ export const base64src = function(base64data) {
     if (!format) return resolve(base64data)
     const filePath = `${wx.env.USER_DATA_PATH}/lucky_${Date.now()}${tempImageFlag++}.${format}`
     const buffer = wx.base64ToArrayBuffer(bodyData)
-    fsm.writeFile({
+    wx.getFileSystemManager().writeFile({
       filePath,
       data: buffer,
       encoding: 'binary',

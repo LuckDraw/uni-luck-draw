@@ -1,6 +1,6 @@
 <template>
   <view v-if="isShow" class="lucky-box" :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }">
-    <canvas id="lucky-wheel" canvas-id="lucky-wheel" :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }"></canvas>
+    <canvas id="lucky-wheel" canvas-id="lucky-wheel" @touchstart="handleClick" :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }"></canvas>
     <view class="lucky-wheel-btn" @click="toPlay" :style="{ width: btnWidth + 'px', height: btnHeight + 'px' }"></view>
     <div class="lucky-imgs">
       <div v-for="(block, index) in blocks" :key="index">
@@ -161,6 +161,12 @@
       stop (...rest) {
         this.$lucky.stop(...rest)
       },
+      handleClick (e) {
+        const { x, y } = e.changedTouches[0]
+        this.$lucky.drawEasterEggs(x, y, function () {
+          this.ctx.draw(true)
+        })
+      }
     },
   }
 </script>

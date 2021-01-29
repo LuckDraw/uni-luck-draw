@@ -1,6 +1,6 @@
 <template>
 	<view v-if="isShow" class="lucky-box" :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }">
-    <canvas id="lucky-grid" canvas-id="lucky-grid" :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }" @touchend="toPlay"></canvas>
+    <canvas id="lucky-grid" canvas-id="lucky-grid" @touchstart="handleClick" :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }" @touchend="toPlay"></canvas>
     <div class="lucky-imgs">
       <div v-for="(prize, index) in prizes" :key="index">
         <div v-if="prize.imgs">
@@ -205,6 +205,12 @@
       stop (...rest) {
         this.$lucky.stop(...rest)
       },
+      handleClick (e) {
+        const { x, y } = e.changedTouches[0]
+        this.$lucky.drawEasterEggs(x, y, function () {
+          this.ctx.draw(true)
+        })
+      }
     },
   }
 </script>

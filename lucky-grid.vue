@@ -1,6 +1,14 @@
 <template>
 	<view v-if="isShow" class="lucky-box" :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }">
-    <canvas id="lucky-grid" canvas-id="lucky-grid" @touchstart="handleClick" :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }" @touchend="toPlay"></canvas>
+    <canvas id="lucky-grid" canvas-id="lucky-grid" @touchstart="handleClick" :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }"></canvas>
+    <div v-if="btnShow">
+      <view class="lucky-grid-btn" v-for="(btn, index) in btns" :key="index" @click="toPlay(btn)" :style="{
+        top: btn.top + 'px',
+        left: btn.left + 'px',
+        width: btn.width + 'px',
+        height: btn.height + 'px',
+      }"></view>
+    </div>
     <div class="lucky-imgs">
       <div v-for="(prize, index) in prizes" :key="index">
         <div v-if="prize.imgs">
@@ -42,6 +50,8 @@
         btnTop: 0,
         dpr: 1,
         transformStyle: '',
+        btns: [],
+        btnShow: false,
       }
     },
     props: {
@@ -180,24 +190,25 @@
             this.$emit('end', ...rest)
           },
         })
-      },
-      toPlay (e) {
-        const {x, y} = e.changedTouches[0]
+        // 动态设置按钮大小
+        console.log(changeUnits(this.width), this.height)
         ;[
           ...this.$props.buttons,
           this.$props.button
-        ].forEach(btn => {
+        ].forEach((btn, index) => {
           if (!btn) return
-          const [xAxis, yAxis, w, h] = this.$lucky.getGeometricProperty([
+          const [left, top, width, height] = this.$lucky.getGeometricProperty([
             btn.x,
             btn.y,
             btn.col || 1,
             btn.row || 1
           ])
-          if (x > xAxis && x < xAxis + w && y > yAxis && y < yAxis + h) {
-            this.$lucky.startCallback(btn)
-          }
+          this.btns[index] = { top, left, width, height }
         })
+        this.btnShow = true
+      },
+      toPlay (btn) {
+        this.$lucky.startCallback(btn)
       },
       play (...rest) {
         this.$lucky.play(...rest)

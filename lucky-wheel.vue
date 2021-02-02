@@ -1,7 +1,7 @@
 <template>
   <view v-if="isShow" class="lucky-box" :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }">
     <canvas id="lucky-wheel" canvas-id="lucky-wheel" @touchstart="handleClick" :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }"></canvas>
-    <view class="lucky-wheel-btn" @click="toPlay" :style="{ width: btnWidth + 'px', height: btnHeight + 'px' }"></view>
+    <cover-view class="lucky-wheel-btn" @click="toPlay" :style="{ width: btnWidth + 'px', height: btnHeight + 'px' }"></cover-view>
     <div class="lucky-imgs">
       <div v-for="(block, index) in blocks" :key="index">
         <div v-if="block.imgs">
@@ -172,6 +172,9 @@
 </script>
 
 <style scoped>
+  #lucky-wheel {
+    pointer-events: none;
+  }
   .lucky-box {
     position: relative;
     overflow: hidden;

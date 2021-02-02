@@ -1,14 +1,14 @@
 <template>
 	<view v-if="isShow" class="lucky-box" :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }">
     <canvas id="lucky-grid" canvas-id="lucky-grid" @touchstart="handleClick" :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }"></canvas>
-    <div v-if="btnShow">
+    <view v-if="btnShow">
       <cover-view class="lucky-grid-btn" v-for="(btn, index) in btns" :key="index" @click="toPlay(btn)" :style="{
         top: btn.top + 'px',
         left: btn.left + 'px',
         width: btn.width + 'px',
         height: btn.height + 'px',
       }"></cover-view>
-    </div>
+    </view>
     <div class="lucky-imgs">
       <div v-for="(prize, index) in prizes" :key="index">
         <div v-if="prize.imgs">
@@ -227,15 +227,13 @@
 </script>
 
 <style scoped>
-  #lucky-grid {
-    pointer-events: none;
-  }
   .lucky-box {
     position: relative;
     overflow: hidden;
   }
   .lucky-box canvas {
     position: absolute;
+    pointer-events: none;
   }
   .lucky-grid-btn {
     position: absolute;

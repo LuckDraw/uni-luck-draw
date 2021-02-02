@@ -172,15 +172,13 @@
 </script>
 
 <style scoped>
-  #lucky-wheel {
-    pointer-events: none;
-  }
   .lucky-box {
     position: relative;
     overflow: hidden;
   }
   .lucky-box canvas {
     position: absolute;
+    pointer-events: none;
   }
   .lucky-wheel-btn {
     position: absolute;

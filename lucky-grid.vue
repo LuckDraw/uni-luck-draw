@@ -44,10 +44,6 @@
         isShow: false,
         boxWidth: 100,
         boxHeight: 100,
-        btnWidth: 0,
-        btnHeight: 0,
-        btnLeft: 0,
-        btnTop: 0,
         dpr: 1,
         transformStyle: '',
         btns: [],
@@ -160,7 +156,7 @@
           flag: 'UNI-H5',
           // #endif
           // #ifdef MP
-          flag: 'UNI-MINI-WX',
+          flag: 'UNI-MP',
           // #endif
           dpr: 1,
           ctx: this.ctx,
@@ -174,10 +170,6 @@
           setInterval: setInterval,
           clearInterval: clearInterval,
           unitFunc: (num, unit) => changeUnits(num + unit),
-          beforeDraw: function () {
-            // const { config } = this
-            // ctx.scale(config.dpr, config.dpr)
-          },
           afterDraw: function () {
             ctx.draw()
           },
@@ -191,7 +183,6 @@
           },
         })
         // 动态设置按钮大小
-        console.log(changeUnits(this.width), this.height)
         ;[
           ...this.$props.buttons,
           this.$props.button

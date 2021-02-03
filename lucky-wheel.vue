@@ -115,7 +115,7 @@
           flag: 'UNI-H5',
           // #endif
           // #ifdef MP
-          flag: 'UNI-MINI-WX',
+          flag: 'UNI-MP',
           // #endif
           dpr: 1,
           ctx: this.ctx,

@@ -104,3 +104,14 @@ export default {
 由于 uni-app 渲染 md 的时候会出问题，所以我把 demo 代码放到了文档里
 
 - [https://100px.net/document/uni-app.html](https://100px.net/document/uni-app.html)
+
+
+<br />
+
+### **如果您觉得这个项目还不错, 可以在 [Github](https://github.com/LuckDraw/uni-luck-draw) 上面帮我点个`star` ☜(ﾟヮﾟ☜)**
+
+<br />
+
+## 推荐的开源项目
+
+- [🎁 h5-Dooring 一款功能强大，高可扩展的H5可视化编辑器](https://github.com/MrXujiang/h5-Dooring)

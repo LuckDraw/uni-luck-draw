@@ -112,6 +112,6 @@ export default {
 
 <br />
 
-## 推荐的开源项目
+## 友情链接
 
 - [🎁 h5-Dooring 一款功能强大，高可扩展的H5可视化编辑器](https://github.com/MrXujiang/h5-Dooring)

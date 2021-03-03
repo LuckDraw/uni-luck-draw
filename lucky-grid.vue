@@ -1,6 +1,6 @@
 <template>
 	<view v-if="isShow" class="lucky-box" :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }">
-    <canvas id="lucky-grid" canvas-id="lucky-grid" @touchstart="handleClick" :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }"></canvas>
+    <canvas id="lucky-grid" canvas-id="lucky-grid" :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }"></canvas>
     <view v-if="btnShow">
       <cover-view class="lucky-grid-btn" v-for="(btn, index) in btns" :key="index" @click="toPlay(btn)" :style="{
         top: btn.top + 'px',
@@ -150,6 +150,7 @@
         this.$nextTick(() => this.draw())
       },
       draw () {
+        const _this = this
         const ctx = this.ctx = uni.createCanvasContext('lucky-grid', this)
         const $lucky = this.$lucky = new LuckyGrid({
           // #ifdef H5 || APP-PLUS
@@ -173,6 +174,18 @@
           afterDraw: function () {
             ctx.draw()
           },
+          afterInit: function () {
+            [..._this.$props.buttons, _this.$props.button].forEach((btn, index) => {
+              if (!btn) return
+              const [left, top, width, height] = this.getGeometricProperty([
+                btn.x,
+                btn.y,
+                btn.col || 1,
+                btn.row || 1
+              ])
+              _this.btns[index] = { top, left, width, height }
+            })
+          },
         }, {
           ...this.$props,
           start: (...rest) => {
@@ -181,20 +194,6 @@
           end: (...rest) => {
             this.$emit('end', ...rest)
           },
-        })
-        // 动态设置按钮大小
-        ;[
-          ...this.$props.buttons,
-          this.$props.button
-        ].forEach((btn, index) => {
-          if (!btn) return
-          const [left, top, width, height] = this.$lucky.getGeometricProperty([
-            btn.x,
-            btn.y,
-            btn.col || 1,
-            btn.row || 1
-          ])
-          this.btns[index] = { top, left, width, height }
         })
         this.btnShow = true
       },
@@ -207,12 +206,6 @@
       stop (...rest) {
         this.$lucky.stop(...rest)
       },
-      handleClick (e) {
-        const { x, y } = e.changedTouches[0]
-        this.$lucky.drawEasterEggs(x, y, function () {
-          this.ctx.draw(true)
-        })
-      }
     },
   }
 </script>

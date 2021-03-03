@@ -4,11 +4,11 @@
   <h1>uni-luck-draw 抽奖组件</h1>
   <p>一个基于 uni-app 的 ( 大转盘 / 九宫格 ) 抽奖插件</p>
   <p>
-    <a href="https://github.com/buuing/uni-luck-draw/stargazers" target="_black">
-      <img src="https://img.shields.io/github/stars/buuing/uni-luck-draw?color=%23ffca28&logo=github&style=flat-square" alt="stars" />
+    <a href="https://github.com/luckdraw/uni-luck-draw/stargazers" target="_black">
+      <img src="https://img.shields.io/github/stars/luckdraw/uni-luck-draw?color=%23ffca28&logo=github&style=flat-square" alt="stars" />
     </a>
-    <a href="https://github.com/buuing/uni-luck-draw/network/members" target="_black">
-      <img src="https://img.shields.io/github/forks/buuing/uni-luck-draw?color=%23ffca28&logo=github&style=flat-square" alt="forks" />
+    <a href="https://github.com/luckdraw/uni-luck-draw/network/members" target="_black">
+      <img src="https://img.shields.io/github/forks/luckdraw/uni-luck-draw?color=%23ffca28&logo=github&style=flat-square" alt="forks" />
     </a>
     <a href="https://www.npmjs.com/package/uni-luck-draw" target="_black">
       <img src="https://img.shields.io/npm/v/uni-luck-draw?color=%23ffca28&logo=npm&style=flat-square" alt="version" />
@@ -21,8 +21,8 @@
     <a href="https://github.com/buuing" target="_black">
       <img src="https://img.shields.io/badge/Author-%20buuing%20-7289da.svg?&logo=github&style=flat-square" alt="author" />
     </a>
-    <a href="https://github.com/buuing/uni-luck-draw/blob/master/LICENSE" target="_black">
-      <img src="https://img.shields.io/github/license/buuing/uni-luck-draw?color=%232DCE89&logo=github&style=flat-square" alt="license" />
+    <a href="https://github.com/luckdraw/uni-luck-draw/blob/master/LICENSE" target="_black">
+      <img src="https://img.shields.io/github/license/luckdraw/uni-luck-draw?color=%232DCE89&logo=github&style=flat-square" alt="license" />
     </a>
   </p>
 </div>
@@ -31,7 +31,7 @@
 
 ## 官方文档 & Demo演示
 
-> **中文**：[https://100px.net/document/uni-app.html](https://100px.net/document/uni-app.html)  
+> **中文**：[https://100px.net/usage/uni-app.html](https://100px.net/usage/uni-app.html)  
 
 <br />
 

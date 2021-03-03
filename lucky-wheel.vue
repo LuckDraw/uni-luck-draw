@@ -1,6 +1,6 @@
 <template>
   <view v-if="isShow" class="lucky-box" :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }">
-    <canvas id="lucky-wheel" canvas-id="lucky-wheel" @touchstart="handleClick" :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }"></canvas>
+    <canvas id="lucky-wheel" canvas-id="lucky-wheel" :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }"></canvas>
     <cover-view class="lucky-wheel-btn" @click="toPlay" :style="{ width: btnWidth + 'px', height: btnHeight + 'px' }"></cover-view>
     <div class="lucky-imgs">
       <div v-for="(block, index) in blocks" :key="index">
@@ -109,6 +109,7 @@
         })
       },
       draw () {
+        const _this = this
         const ctx = this.ctx = uni.createCanvasContext('lucky-wheel', this)
         const $lucky = this.$lucky = new LuckyWheel({
           // #ifdef H5 || APP-PLUS
@@ -133,6 +134,11 @@
             const Radius = Math.min(this.config.width, this.config.height) / 2
             ctx.translate(-Radius, -Radius)
           },
+          afterInit: function () {
+            // 动态设置按钮
+            _this.btnWidth = this.maxBtnRadius * 2
+            _this.btnHeight = this.maxBtnRadius * 2
+          },
           beforeDraw: function () {
             ctx.translate(this.Radius, this.Radius)
           },
@@ -148,9 +154,6 @@
             this.$emit('end', ...rest)
           },
         })
-        // 动态设置按钮大小
-        this.btnWidth = $lucky.maxBtnRadius * 2
-        this.btnHeight = $lucky.maxBtnRadius * 2
       },
       toPlay (e) {
         this.$lucky.startCallback()
@@ -161,12 +164,6 @@
       stop (...rest) {
         this.$lucky.stop(...rest)
       },
-      handleClick (e) {
-        const { x, y } = e.changedTouches[0]
-        this.$lucky.drawEasterEggs(x, y, function () {
-          this.ctx.draw(true)
-        })
-      }
     },
   }
 </script>

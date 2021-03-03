@@ -1,7 +1,12 @@
 <template>
   <view v-if="isShow" class="lucky-box" :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }">
     <canvas id="lucky-wheel" canvas-id="lucky-wheel" :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }"></canvas>
+    <!-- #ifdef APP-PLUS -->
+    <view class="lucky-wheel-btn" @click="toPlay" :style="{ width: btnWidth + 'px', height: btnHeight + 'px' }"></view>
+    <!-- #endif -->
+    <!-- #ifndef APP-PLUS -->
     <cover-view class="lucky-wheel-btn" @click="toPlay" :style="{ width: btnWidth + 'px', height: btnHeight + 'px' }"></cover-view>
+    <!-- #endif -->
     <div class="lucky-imgs">
       <div v-for="(block, index) in blocks" :key="index">
         <div v-if="block.imgs">

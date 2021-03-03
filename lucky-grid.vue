@@ -1,6 +1,17 @@
 <template>
 	<view v-if="isShow" class="lucky-box" :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }">
     <canvas id="lucky-grid" canvas-id="lucky-grid" :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }"></canvas>
+    <!-- #ifdef APP-PLUS -->
+    <view v-if="btnShow">
+      <view class="lucky-grid-btn" v-for="(btn, index) in btns" :key="index" @click="toPlay(btn)" :style="{
+        top: btn.top + 'px',
+        left: btn.left + 'px',
+        width: btn.width + 'px',
+        height: btn.height + 'px',
+      }"></view>
+    </view>
+    <!-- #endif -->
+    <!-- #ifndef APP-PLUS -->
     <view v-if="btnShow">
       <cover-view class="lucky-grid-btn" v-for="(btn, index) in btns" :key="index" @click="toPlay(btn)" :style="{
         top: btn.top + 'px',
@@ -9,6 +20,7 @@
         height: btn.height + 'px',
       }"></cover-view>
     </view>
+    <!-- #endif -->
     <div class="lucky-imgs">
       <div v-for="(prize, index) in prizes" :key="index">
         <div v-if="prize.imgs">

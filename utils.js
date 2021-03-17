@@ -57,6 +57,14 @@ export const resolveImage = async (res, img, imgName = 'src', resolveName = '$re
     return
   }
   // #endif
+  //如果是本地图片,直接返回
+  if (src.indexOf("http") !== 0) {
+      $resolve({
+          ...res.detail,
+          path:src
+      })
+      return
+  }
   // 如果是网络图片, 则通过getImageInfo()方法获取图片宽高
   uni.getImageInfo({
     src: src,

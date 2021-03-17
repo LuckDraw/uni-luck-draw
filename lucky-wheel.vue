@@ -82,7 +82,7 @@
       },
     },
     mounted () {
-      this.init()
+      this.initLucky()
     },
     watch: {
       blocks (newData, oldData) {
@@ -100,7 +100,7 @@
         const img = this[name][index].imgs[i]
         resolveImage(res, img)
       },
-      init () {
+      initLucky () {
         const dpr = this.dpr = uni.getSystemInfoSync().pixelRatio
         this.boxWidth = changeUnits(this.width)
         this.boxHeight = changeUnits(this.height)
@@ -162,6 +162,9 @@
       },
       toPlay (e) {
         this.$lucky.startCallback()
+      },
+      init () {
+        this.$lucky.init({})
       },
       play (...rest) {
         this.$lucky.play(...rest)

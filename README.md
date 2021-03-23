@@ -111,7 +111,3 @@ export default {
 ### **如果您觉得这个项目还不错, 可以在 [Github](https://github.com/LuckDraw/uni-luck-draw) 上面帮我点个`star` ☜(ﾟヮﾟ☜)**
 
 <br />
-
-## 友情链接
-
-- [🎁 h5-Dooring 一款功能强大，高可扩展的H5可视化编辑器](https://github.com/MrXujiang/h5-Dooring)

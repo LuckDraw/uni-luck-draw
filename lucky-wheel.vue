@@ -143,6 +143,7 @@
             // 动态设置按钮
             _this.btnWidth = this.maxBtnRadius * 2
             _this.btnHeight = this.maxBtnRadius * 2
+            _this.$forceUpdate()
           },
           beforeDraw: function () {
             ctx.translate(this.Radius, this.Radius)

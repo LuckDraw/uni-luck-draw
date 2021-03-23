@@ -197,6 +197,7 @@
               ])
               _this.btns[index] = { top, left, width, height }
             })
+            _this.$forceUpdate()
           },
         }, {
           ...this.$props,

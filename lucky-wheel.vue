@@ -85,14 +85,20 @@
       this.initLucky()
     },
     watch: {
-      blocks (newData, oldData) {
+      blocks (newData) {
         this.$lucky && (this.$lucky.blocks = newData)
       },
-      prizes (newData, oldData) {
+      prizes (newData) {
         this.$lucky && (this.$lucky.prizes = newData)
       },
-      buttons (newData, oldData) {
+      buttons (newData) {
         this.$lucky && (this.$lucky.buttons = newData)
+      },
+      defaultStyle (newData) {
+        this.$lucky && (this.$lucky.defaultStyle = newData)
+      },
+      defaultConfig (newData) {
+        this.$lucky && (this.$lucky.defaultConfig = newData)
       },
     },
     methods: {

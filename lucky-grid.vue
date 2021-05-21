@@ -25,8 +25,8 @@
       <div v-for="(prize, index) in prizes" :key="index">
         <div v-if="prize.imgs">
           <div v-for="(img, i) in prize.imgs" :key="i">
-            <image :src="img.src" @load="e => imgBindload(e, 'prizes', index, i)"></image>
-            <image :src="img.activeSrc" @load="e => imgBindloadActive(e, 'prizes', index, i)"></image>
+            <image :src="img.src" :data-index="index" :data-i="i" @load="e => imgBindload(e, 'prizes')"></image>
+            <image :src="img.activeSrc" :data-index="index" :data-i="i" @load="e => imgBindloadActive(e, 'prizes')"></image>
           </div>
         </div>
       </div>
@@ -34,13 +34,13 @@
     <div class="lucky-imgs">
       <div v-for="(btn, index) in buttons" :key="index">
         <div v-if="btn.imgs">
-          <image v-for="(img, i) in btn.imgs" :key="i" :src="img.src" @load="e => imgBindload(e, 'buttons', index, i)"></image>
+          <image v-for="(img, i) in btn.imgs" :key="i" :src="img.src" :data-index="index" :data-i="i" @load="e => imgBindload(e, 'buttons')"></image>
         </div>
       </div>
     </div>
     <div class="lucky-imgs">
       <span v-if="button && button.imgs">
-        <image v-for="(img, i) in button.imgs" :key="i" :src="img.src" @load="e => imgBindloadBtn(e, 'button', i)"></image>
+        <image v-for="(img, i) in button.imgs" :key="i" :src="img.src" :data-i="i" @load="e => imgBindloadBtn(e, 'button')"></image>
       </span>
     </div>
   </view>
@@ -147,15 +147,18 @@
       },
     },
     methods: {
-      async imgBindload (res, name, index, i) {
+      async imgBindload (res, name) {
+        const { index, i } = res.currentTarget.dataset
         const img = this[name][index].imgs[i]
         resolveImage(res, img)
       },
-      async imgBindloadActive (res, name, index, i) {
+      async imgBindloadActive (res, name) {
+        const { index, i } = res.currentTarget.dataset
         const img = this[name][index].imgs[i]
         resolveImage(res, img, 'activeSrc', '$activeResolve')
       },
-      async imgBindloadBtn (res, name, i) {
+      async imgBindloadBtn (res, name) {
+        const { i } = res.currentTarget.dataset
         const img = this[name].imgs[i]
         resolveImage(res, img)
       },

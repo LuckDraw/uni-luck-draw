@@ -1,6 +1,19 @@
 <template>
   <view v-if="isShow" class="lucky-box" :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }">
-    <canvas id="lucky-wheel" canvas-id="lucky-wheel" :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }"></canvas>
+    <canvas
+      id="lucky-wheel"
+      canvas-id="lucky-wheel"
+      v-show="showCanvas"
+      :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }"
+    ></canvas>
+    <image
+      v-if="luckyImg"
+      class="lucky-img"
+      :src="luckyImg"
+      mode="scaleToFill"
+      @load="luckyImgLoad"
+      :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }"
+    ></image>
     <!-- #ifdef APP-PLUS -->
     <view class="lucky-wheel-btn" @click="toPlay" :style="{ width: btnWidth + 'px', height: btnHeight + 'px' }"></view>
     <!-- #endif -->
@@ -32,7 +45,7 @@
 </template>
 
 <script>
-  import { changeUnits, resolveImage } from './utils.js'
+  import { changeUnits, resolveImage, getImage } from './utils.js'
   import { LuckyWheel } from '../lucky-canvas'
   export default {
     name: 'lucky-wheel',
@@ -45,6 +58,8 @@
         btnHeight: 0,
         dpr: 1,
         transformStyle: '',
+        luckyImg: '',
+        showCanvas: true,
       }
     },
     props: {
@@ -164,10 +179,20 @@
           },
           end: (...rest) => {
             this.$emit('end', ...rest)
+            getImage.call(this, 'lucky-wheel').then(res => {
+              this.luckyImg = res.tempFilePath
+            })
           },
         })
       },
+      luckyImgLoad () {
+        this.showCanvas = false
+      },
       toPlay (e) {
+        // 隐藏图片并显示canvas
+        this.showCanvas = true
+        this.luckyImg = ''
+        // 触发抽奖逻辑
         this.$lucky.startCallback()
       },
       init () {
@@ -191,6 +216,7 @@
   .lucky-box canvas {
     position: absolute;
     pointer-events: none;
+    z-index: 99;
   }
   .lucky-wheel-btn {
     position: absolute;
@@ -199,6 +225,13 @@
     transform: translate(-50%, -50%);
     background: rgba(0, 0, 0, 0);
     border-radius: 50%;
+    z-index: 101;
+  }
+  .lucky-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
   }
   .lucky-imgs {
     width: 0;

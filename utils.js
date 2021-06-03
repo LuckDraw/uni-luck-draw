@@ -71,3 +71,13 @@ export const resolveImage = async (res, img, imgName = 'src', resolveName = '$re
     fail: () => console.error('API `uni.getImageInfo` 加载图片失败', src)
   })
 }
+
+export function getImage (canvasId) {
+  return new Promise((resolve, reject) => {
+    uni.canvasToTempFilePath({
+      canvasId,
+      success: res => resolve(res),
+      fail: err => reject(err)
+    }, this)
+  })
+}

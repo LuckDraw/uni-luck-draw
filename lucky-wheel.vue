@@ -7,7 +7,7 @@
       :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }"
     ></canvas>
     <image
-      v-if="luckyImg"
+      v-show="luckyImg"
       class="lucky-img"
       :src="luckyImg"
       mode="scaleToFill"
